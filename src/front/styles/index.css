@@ -1,3 +1,12 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.logo {
+    max-width: 110px; 
+}
+
+@media (max-width: 576px) {
+    .logo {
+        max-width: 30px; /* Smaller size for mobile */
+    }
+}

@@ -8,7 +8,9 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "webpack-dev-server --config webpack.dev.js --port 3000",
-		"build": "webpack --config webpack.prod.js"
+		"build": "webpack --config webpack.prod.js",
+		"test": "jest",
+		"eject": "react-scripts eject"
 	},
 	"author": {
 		"name": "Alejandro Sanchez",
@@ -73,10 +75,17 @@
 		]
 	},
 	"dependencies": {
+		"@paypal/react-paypal-js": "^8.3.0",
+		"bootstrap": "^5.3.3",
+		"html2canvas": "^1.4.1",
+		"jspdf": "^2.5.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
+		"react-bootstrap": "^2.10.2",
 		"react-dom": "^16.8.4",
+		"react-icons": "^5.2.1",
+		"react-paypal-button-v2": "^2.6.3",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-router-dom": "^6.23.1"
 	}
 }

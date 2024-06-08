@@ -7,8 +7,13 @@ html, body, #root, .app {
     padding: 0;
   }
 
-  .fullscreen-container {
+.fullscreen-container {
     display: grid;
     place-items: center;
     height: 753px;
   }
+
+.form{
+  height: 130px;
+  width: 300px;
+}

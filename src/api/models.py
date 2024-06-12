@@ -36,6 +36,7 @@ class Gastos (db.Model):
         return {
             "id": self.id,
             "cantidad": self.cantidad,
+            "categoria": self.categoria,
             "list_name": self.list_name,
         }
     

@@ -79,3 +79,76 @@ def list_login():
     }    
 
     return jsonify(response_body), 200
+
+
+# Añadir un nuevo gasto 
+# {
+#   "list_name":"",
+#   "cantidad":"",
+#   "categoria":""
+# }
+
+
+@api.route('/gastos', methods=['POST'])
+def create_gasto():
+    data = request.json
+    print(data)
+    list_name = Lista.query.filter_by(list_name=data["list_name"]).first()
+    if not list_name: 
+        return jsonify({
+            "msg": "name not found, sorry"
+        }), 404
+    
+    first_available_id = db.session.query(func.max(Gastos.id)).scalar()
+    new_gasto_id = (first_available_id or 0) + 1
+    
+    new_gasto = Gastos(id=new_gasto_id, list_name=data["list_name"],cantidad=data["cantidad"],categoria=data["categoria"])
+    db.session.add(new_gasto)
+    db.session.commit()
+    # token = create_access_token(identity = new_user.id)
+    response_body = {
+        "msg": "All working",
+        # "token": token,
+        "user": new_gasto.serialize()
+        # "query result": query_result
+    }
+
+    return jsonify(response_body), 200
+
+# Eliminar Gasto
+
+@api.route('/gastos/<int:gasto_id>', methods=['DELETE'])
+def delete_one_gasto(gasto_id):
+
+    # this is how you can use the Family datastructure by calling its methods
+    remove_gasto = Gastos.query.filter_by(id=gasto_id).first()
+    if not remove_gasto: 
+        return jsonify({
+            "msg": "id not found, sorry"
+        }), 404
+    db.session.delete(remove_gasto)
+    db.session.commit()
+    gasto_response= {
+        "msg": "Gasto eliminado correctamente",
+        # "user": new_gasto.serialize()
+    }
+
+
+    return jsonify(gasto_response), 200
+
+@api.route('/gastos/<string:lista_name>', methods=['GET'])
+def get_all_gatos_one_list(lista_name):
+
+    all_gastos_one_list = Gastos.query.filter_by(list_name=lista_name).all()
+    if not all_gastos_one_list: 
+        return jsonify({
+            "msg": "list name not found, sorry"
+        }), 404
+    # Aplica serialize a cada elemento de la lista
+    serialized_gastos = [gasto.serialize() for gasto in all_gastos_one_list]
+    response_body = {
+        "gastos": serialized_gastos
+    }
+
+
+    return jsonify(response_body), 200
